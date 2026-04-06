@@ -3,10 +3,11 @@ package com.ecommerce.main;
 import com.ecommerce.model.Product;
 import com.ecommerce.repository.ProductRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ProductRepository productRepository = new ProductRepository();
         List<Product> products = productRepository.getAll();
 
@@ -38,8 +39,6 @@ public class Main {
         for (Product product : products) {
             System.out.println(product);
         }
-
-
 
 
 
