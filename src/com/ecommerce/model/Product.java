@@ -7,7 +7,6 @@ public class Product {
     private String name;
     private int maxRetailPrice;
     private float discountPercentage;
-    private int rating;
     private boolean isAvailable;
     private String company;
     private String category;
@@ -52,15 +51,6 @@ public class Product {
         return this;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
-    public Product setRating(int rating) {
-        this.rating = rating;
-        return this;
-    }
-
     public String getCompany() {
         return company;
     }
@@ -101,12 +91,12 @@ public class Product {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return id == product.id && maxRetailPrice == product.maxRetailPrice && Float.compare(discountPercentage, product.discountPercentage) == 0 && rating == product.rating && manufacturedYear == product.manufacturedYear && isAvailable == product.isAvailable && Objects.equals(name, product.name) && Objects.equals(company, product.company) && Objects.equals(category, product.category);
+        return id == product.id && maxRetailPrice == product.maxRetailPrice && Float.compare(discountPercentage, product.discountPercentage) == 0 && manufacturedYear == product.manufacturedYear && isAvailable == product.isAvailable && Objects.equals(name, product.name) && Objects.equals(company, product.company) && Objects.equals(category, product.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, maxRetailPrice, discountPercentage, rating, company, category, manufacturedYear, isAvailable);
+        return Objects.hash(id, name, maxRetailPrice, discountPercentage, company, category, manufacturedYear, isAvailable);
     }
 
     @Override
@@ -116,7 +106,6 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", maxRetailPrice=" + maxRetailPrice +
                 ", discountPercentage=" + discountPercentage +
-                ", rating=" + rating +
                 ", company='" + company + '\'' +
                 ", category='" + category + '\'' +
                 ", manufacturedYear=" + manufacturedYear +
