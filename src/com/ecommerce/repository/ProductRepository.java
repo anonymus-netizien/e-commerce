@@ -20,17 +20,34 @@ public class ProductRepository {
         return this.products;
     }
 
-    //Save a new Product
-    public Product save(Product product) {
-        this.products.add(product);
-        return product;
-    }
-
     //Get Product by ID
     public Optional<Product> getById(int id) {
         return this.products.stream()
                 .filter(product -> product.getId() == id)
                 .findFirst();
     }
+
+    //Save a new Product
+    public Product save(Product product) {
+        this.products.add(product);
+        return product;
+    }
+
+    //Update a Product
+    public Product update(int id, Product product) {
+        this.products.replaceAll(p -> p.getId() == id ? product : p);
+        return product;
+    }
+
+    //Delete a Product
+    public boolean delete(int id) {
+        this.products.removeIf(product -> product.getId() == id);
+        return true;
+    }
+    //a Flavour of delete which depends on overriding of equals and hashcode
+//    public boolean delete(Product product) {
+//        this.products.remove(product);
+//        return true;
+//    }
 
 }

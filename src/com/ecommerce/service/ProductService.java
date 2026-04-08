@@ -1,5 +1,7 @@
 package com.ecommerce.service;
 
+import com.ecommerce.exception.ProductExistsException;
+import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.model.Product;
 
 import java.math.BigDecimal;
@@ -8,6 +10,16 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface ProductService {
+
+    Product save(Product product) throws ProductExistsException;
+
+    Product getById(int id) throws ProductNotFoundException;
+
+    List<Product> getAll();
+
+    Product update(int id, Product product) throws ProductNotFoundException;
+
+    void delete(int id) throws ProductNotFoundException;
 
     //Get all available products based on availability
     List<Product> getAllProductsByAvailability(boolean isAvailable);

@@ -1,5 +1,7 @@
 package com.ecommerce.service;
 
+import com.ecommerce.exception.ProductExistsException;
+import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.model.Product;
 import com.ecommerce.repository.ProductRepository;
 
@@ -14,8 +16,40 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
+    //Dependency
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    //
+    @Override
+    public Product save(Product product) throws ProductExistsException {
+        //Checks if Product already exists by id
+        productRepository.getById(product.getId()).ifPresent(p -> {throw new ProductExistsException("Product with id " + product.getId() + " already exists");});
+        return productRepository.save(product);
+
+    }
+
+    @Override
+    public Product getById(int id) throws ProductNotFoundException {
+        return productRepository.getById(id).orElseThrow(()-> new ProductNotFoundException("Product with id " + id + " not found"));
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return productRepository.getAll();
+    }
+
+    @Override
+    public Product update(int id, Product product) throws ProductNotFoundException {
+        productRepository.getById(id).orElseThrow(()-> new ProductNotFoundException("Product with id " + id + " not found"));
+        return productRepository.update(id, product);
+    }
+
+    @Override
+    public void delete(int id) throws ProductNotFoundException {
+        productRepository.getById(id).orElseThrow(()-> new ProductNotFoundException("Product with id " + id + " not found"));
+        productRepository.delete(id);
     }
 
     @Override
