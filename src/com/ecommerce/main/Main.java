@@ -1,7 +1,11 @@
 package com.ecommerce.main;
 
+import com.ecommerce.model.Customer;
 import com.ecommerce.model.Product;
+import com.ecommerce.repository.CustomerRepository;
 import com.ecommerce.repository.ProductRepository;
+import com.ecommerce.service.CustomerService;
+import com.ecommerce.service.CustomerServiceImpl;
 import com.ecommerce.service.ProductService;
 import com.ecommerce.service.ProductServiceImpl;
 
@@ -37,6 +41,39 @@ public class Main {
         printHeader();
         for (Product product : products) {
             printProduct(product);
+        }
+        System.out.println();
+        System.out.println();
+    }
+
+    private static void printCustomerHeader() {
+        System.out.printf("%-5s %-20s %-35s %-5s %-10s %-15s %-12s %-20s %-20s%n",
+                "ID", "Name", "Email", "Age", "Gender", "Status", "Membership", "Residential City", "Shipping City");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    private static void printCustomer(Customer customer) {
+        System.out.printf("%-5d %-20s %-35s %-5d %-10s %-15s %-12s %-20s %-20s%n",
+                customer.getId(),
+                customer.getName(),
+                customer.getEmail(),
+                customer.getAge(),
+                customer.getGender(),
+                customer.getStatus(),
+                customer.getMembershipType(),
+                customer.getResdentialAddress().getCity(),
+                customer.getShippingAddress().getCity());
+    }
+
+    private static void printCustomers(List<Customer> customers) {
+        if (customers == null || customers.isEmpty()) {
+            System.out.println("No customers found.");
+            return;
+        }
+
+        printCustomerHeader();
+        for (Customer customer : customers) {
+            printCustomer(customer);
         }
         System.out.println();
         System.out.println();
@@ -78,6 +115,9 @@ public class Main {
 
         ProductRepository productRepository = new ProductRepository();
         ProductService productService = new ProductServiceImpl(productRepository);
+
+        CustomerRepository customerRepository = new CustomerRepository();
+        CustomerService customerService = new CustomerServiceImpl(customerRepository);
 
         System.out.println("---------------------------------------- Basic Level ---------------------------------------- ");
 
@@ -138,6 +178,9 @@ public class Main {
         System.out.println(productService.getAveragePriceByCategory());
 
         System.out.println(productService.getTopThreeMostExpensiveProductsByCategory());
+
+
+        printCustomers(customerService.getAllCustomers());
 
 
 

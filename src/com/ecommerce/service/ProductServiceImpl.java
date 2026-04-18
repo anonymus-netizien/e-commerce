@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
-    //
+    //Overriding Repository Methods
     @Override
     public Product save(Product product) throws ProductExistsException {
         //Checks if Product already exists by id

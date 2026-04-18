@@ -44,10 +44,11 @@ public class ProductRepository {
         this.products.removeIf(product -> product.getId() == id);
         return true;
     }
-    //a Flavour of delete which depends on overriding of equals and hashcode
-//    public boolean delete(Product product) {
-//        this.products.remove(product);
-//        return true;
-//    }
+    /* A Flavour of delete which depends on overriding of equals and hashcode
+    public boolean delete(Product product) {
+        this.products.remove(product);
+        return true;
+    }
+     */
 
 }
