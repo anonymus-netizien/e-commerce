@@ -1,13 +1,12 @@
 package com.ecommerce.main;
 
+import com.ecommerce.enums.*;
 import com.ecommerce.model.Customer;
 import com.ecommerce.model.Product;
 import com.ecommerce.repository.CustomerRepository;
+import com.ecommerce.repository.OrderRepository;
 import com.ecommerce.repository.ProductRepository;
-import com.ecommerce.service.CustomerService;
-import com.ecommerce.service.CustomerServiceImpl;
-import com.ecommerce.service.ProductService;
-import com.ecommerce.service.ProductServiceImpl;
+import com.ecommerce.service.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -94,7 +93,7 @@ public class Main {
 //
 //        //Repository Operations
 //        //get product by ID
-//        System.out.println(productRepository.getById(1));
+//        System.out.println(productRepository.findById(1));
 //
 //        //product update
 //        System.out.println(productRepository.update(new Product().setId(1).setName("MacBook Pro").setMaxRetailPrice(169999).setDiscountPercentage(10.7f).setRating(4).setAvailable(true)));
@@ -118,6 +117,9 @@ public class Main {
 
         CustomerRepository customerRepository = new CustomerRepository();
         CustomerService customerService = new CustomerServiceImpl(customerRepository);
+
+        OrderRepository orderRepository = new OrderRepository();
+        OrderService orderService = new OrderServiceImpl(orderRepository);
 
         System.out.println("---------------------------------------- Basic Level ---------------------------------------- ");
 
@@ -150,7 +152,7 @@ public class Main {
 
         System.out.println(productService.calculateTotalInventoryValue());
 
-        System.out.println(productService.calculateTotalFinalPrice(productRepository.getAll()));
+        System.out.println(productService.calculateTotalFinalPrice(productRepository.findAll()));
 
         printProducts(productService.getProductsManufacturedAfter(2022));
 
@@ -182,7 +184,18 @@ public class Main {
 
         printCustomers(customerService.getAllCustomers());
 
+        printCustomer(customerService.getCustomerById(2));
 
+        System.out.println(DiscountType.FLAT.applyDiscount(999,499));
 
+        System.out.println(ProductRating.FOUR_STAR.getNumericRating());
+
+        System.out.println(ShipmentType.EXPRESS.getShippingCost());
+
+        System.out.println(OrderStatus.CONFIRMED.canTransitionTo(OrderStatus.DELIVERED));
+
+        System.out.println(PaymentStatus.REFUNDED.canRetry());
+
+        System.out.println(orderService.countOrdersByStatus());
     }
 }

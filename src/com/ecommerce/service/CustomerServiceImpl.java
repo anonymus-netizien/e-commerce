@@ -16,18 +16,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getAllCustomers() {
-        return customerRepository.getAll();
+        return customerRepository.findAll();
     }
 
     @Override
     public Customer getCustomerById(int id) throws CustomerNotFoundException {
-        return customerRepository.getById(id)
+        return customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Customer with id " + id + " not found"));
     }
 
     @Override
     public Customer saveCustomer(Customer customer) throws CustomerExistsException {
-        customerRepository.getById(customer.getId()).ifPresent(existingCustomer -> {
+        customerRepository.findById(customer.getId()).ifPresent(existingCustomer -> {
             throw new IllegalArgumentException("Customer with id " + customer.getId() + " already exists");
         });
         return customerRepository.save(customer);
@@ -35,14 +35,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer updateCustomer(int id, Customer customer) {
-        customerRepository.getById(id)
+        customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Customer with id " + id + " not found"));
         return customerRepository.update(id, customer);
     }
 
     @Override
     public void deleteCustomer(int id) {
-        customerRepository.getById(id)
+        customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Customer with id " + id + " not found"));
         customerRepository.delete(id);
     }

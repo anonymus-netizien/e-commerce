@@ -2,9 +2,12 @@ package com.ecommerce.util;
 
 import com.ecommerce.enums.Gender;
 import com.ecommerce.enums.Membership;
+import com.ecommerce.enums.OrderStatus;
+import com.ecommerce.enums.PaymentMethod;
 import com.ecommerce.enums.Status;
 import com.ecommerce.model.Address;
 import com.ecommerce.model.Customer;
+import com.ecommerce.model.Order;
 import com.ecommerce.model.Product;
 
 import java.io.BufferedReader;
@@ -80,6 +83,28 @@ public class CsvParser {
             }
         }
         return customers;
+    }
+
+    public List<Order> getOrdersFromCsv() throws IOException {
+        List<Order> orders = new ArrayList<>();
+        File file = new File("/Users/VISHU/vishu/orders.csv");
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            br.readLine();
+            String orderData = br.readLine();
+            while (orderData != null) {
+                String[] split = orderData.split(",");
+
+                Order order = new Order()
+                        .setId(Integer.parseInt(split[0].trim()))
+                        .setStatus(OrderStatus.valueOf(split[1].trim().toUpperCase()))
+                        .setPaymentMethod(PaymentMethod.valueOf(split[2].trim().toUpperCase()));
+
+                orders.add(order);
+                orderData = br.readLine();
+            }
+        }
+        return orders;
     }
 
     public Address parseAddress(String address) {

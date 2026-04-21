@@ -16,12 +16,12 @@ public class ProductRepository {
     }
 
     //Get all Products
-    public List<Product> getAll() {
+    public List<Product> findAll() {
         return this.products;
     }
 
     //Get Product by ID
-    public Optional<Product> getById(int id) {
+    public Optional<Product> findById(int id) {
         return this.products.stream()
                 .filter(product -> product.getId() == id)
                 .findFirst();

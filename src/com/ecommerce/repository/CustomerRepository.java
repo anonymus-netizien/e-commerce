@@ -16,12 +16,12 @@ public class CustomerRepository {
     }
 
     //Get all Customers
-    public List<Customer> getAll() {
+    public List<Customer> findAll() {
         return this.customers;
     }
 
     //Get Customer by ID
-    public Optional<Customer> getById(int id) {
+    public Optional<Customer> findById(int id) {
         return this.customers.stream()
                 .filter(customer -> customer.getId() == id)
                 .findFirst();
